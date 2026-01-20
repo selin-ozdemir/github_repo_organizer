@@ -11,22 +11,23 @@ require('dotenv').config();
 // Daemo AI Client Setup
 class DaemoClient {
     constructor() {
-        this.apiKey = process.env.DAEMO_API_KEY;
-        this.baseUrl = process.env.DAEMO_API_URL || 'https://api.daemo.ai/v1';
-    }
+    this.apiKey = process.env.DAEMO_API_KEY;
+    this.agentId = process.env.DAEMO_AGENT_ID;
+    this.baseUrl = 'https://backend.daemo.ai';
+}
 
     /**
      * Use natural language to query repository data stored in Daemo
      * Example: "Find all repositories with high priority issues"
      */
     async query(naturalLanguageQuery) {
-        try {
-            const response = await fetch(`${this.baseUrl}/query`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.apiKey}`
-                },
+    try {
+        const response = await fetch(`${this.baseUrl}/agents/${this.agentId}/query`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-Key': this.apiKey
+            },
                 body: JSON.stringify({
                     query: naturalLanguageQuery,
                     schema: 'github_repos' // Your data schema in Daemo
@@ -136,6 +137,8 @@ async function analyzeWithAI(repo, octokit) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "x-api-key": process.env.ANTHROPIC_API_KEY,
+                "anthropic-version": "2023-06-01"
             },
             body: JSON.stringify({
                 model: "claude-sonnet-4-20250514",
