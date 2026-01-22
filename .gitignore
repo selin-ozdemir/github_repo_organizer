@@ -1,0 +1,9 @@
+node_modules/
+.env
+build/
+public/
+temp/
+.vercel/
+public/
+supabase/.temp
+.auth_token
