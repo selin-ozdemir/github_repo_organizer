@@ -1285,7 +1285,7 @@ daemo.start();
 main();
 ```
 
-**Save this as your complete script and make sure you have:**
+
 
 1. **.env file:**
 ```
